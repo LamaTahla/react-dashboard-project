@@ -1,5 +1,9 @@
 # React Dashboard Project
 
+## Live Demo
+
+[View Project Live](https://dazzling-manatee-872d47.netlify.app/)
+
 A practical React dashboard project built with React and Vite.
 The project contains a public website and an admin dashboard with authentication, protected routes, role-based access control, CRUD operations, API integration, and server state management using TanStack Query.
 

@@ -3,7 +3,7 @@ function AboutPage() {
     <div className="website-page about-page">
       <span className="page-badge">About Project</span>
 
-      <h1>About This React Project</h1>
+      <h1>About This React Project after upload to live</h1>
 
       <p>
         This project is a complete React application that combines a public
