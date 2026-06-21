@@ -1,4 +1,11 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import LoadingState from '../../components/LoadingState';
+import ErrorState from '../../components/ErrorState';
+
+import { getContactPage } from '../../api/postsService';
+import { queryKeys } from '../../api/queryKeys';
 
 function ContactPage() {
   const [formData, setFormData] = useState({
@@ -9,6 +16,19 @@ function ContactPage() {
 
   const [formErrors, setFormErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
+
+  const {
+    data: contact,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: queryKeys.contactPage,
+    queryFn: getContactPage,
+    staleTime: 0,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: true,
+  });
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -67,14 +87,62 @@ function ContactPage() {
     setFormErrors({});
   }
 
-  return (
-    <div className="website-page">
-      <h1>Contact Us</h1>
+  if (isLoading) {
+    return <LoadingState message="Loading contact page..." />;
+  }
 
-      <p>
-        Have a question or want to get in touch? Send us a message and we will
-        respond as soon as possible.
-      </p>
+  if (isError) {
+    return <ErrorState message={error.message || 'Failed to load contact page'} />;
+  }
+
+  if (!contact) {
+    return <ErrorState message="Contact page content was not found." />;
+  }
+
+  return (
+    <div className="website-page contact-page">
+      <span className="page-badge">{contact.badge}</span>
+
+      <h1>{contact.title}</h1>
+
+      <p>{contact.body}</p>
+
+      <div className="contact-info-grid">
+        <div className="contact-info-card">
+          <h2>Email</h2>
+          <p>{contact.email}</p>
+        </div>
+
+        <div className="contact-info-card">
+          <h2>Phone</h2>
+          <p>{contact.phone}</p>
+        </div>
+
+        <div className="contact-info-card">
+          <h2>Address</h2>
+          <p>{contact.address}</p>
+        </div>
+      </div>
+
+      <div className="contact-social-links">
+        {contact.facebook && (
+          <a href={contact.facebook} target="_blank" rel="noreferrer">
+            Facebook
+          </a>
+        )}
+
+        {contact.github && (
+          <a href={contact.github} target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        )}
+
+        {contact.linkedin && (
+          <a href={contact.linkedin} target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+        )}
+      </div>
 
       <form className="contact-form" onSubmit={handleSubmit}>
         <div className="form-group">

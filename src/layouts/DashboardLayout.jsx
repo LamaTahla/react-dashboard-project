@@ -32,6 +32,12 @@ function DashboardLayout() {
                             About Setting
                         </NavLink>
                     )}
+                   
+                    {(isAdmin || isEditor) && (
+                        <NavLink to="/admin/contact-settings">
+                            Contact Setting
+                        </NavLink>
+                    )}
 
                     {(isAdmin || isEditor) && (
                         <NavLink to="/admin/posts">

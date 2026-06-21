@@ -24,6 +24,7 @@ The project contains a public website and an admin dashboard with authentication
 * API integration with MockAPI
 * Server state management with TanStack Query
 * React Query Devtools
+* Dynamic About page content managed from the admin dashboard
 
 ## Tech Stack
 

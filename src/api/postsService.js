@@ -9,9 +9,7 @@ export const getPosts = async () => {
 
   const data = await response.json();
 
-  return data.filter(
-    (post) => post.type !== 'page' && post.slug !== 'about'
-  );
+  return data.filter((post) => post.type !== 'page');
 };
 
 export async function getPostById(id) {
@@ -67,6 +65,7 @@ export async function deletePost(id) {
 
   return true;
 }
+/*  ADD ABOUT PAGE */
 export const getAboutPage = async () => {
   const response = await fetch(`${API_BASE_URL}/posts?slug=about`);
 
@@ -101,6 +100,45 @@ export const updateAboutPage = async (id, aboutData) => {
 
   if (!response.ok) {
     throw new Error('Failed to update about page');
+  }
+
+  return response.json();
+};
+/* ADD CONTACT PAGE */
+export const getContactPage = async () => {
+  const response = await fetch(`${API_BASE_URL}/posts?slug=contact`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch contact page');
+  }
+
+  const data = await response.json();
+
+  const contactPage = data.find((post) => post.slug === 'contact');
+
+  if (!contactPage) {
+    throw new Error('Contact page content was not found');
+  }
+
+  return contactPage;
+};
+
+export const updateContactPage = async (id, contactData) => {
+  const response = await fetch(`${API_BASE_URL}/posts/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...contactData,
+      id,
+      slug: 'contact',
+      type: 'page',
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update contact page');
   }
 
   return response.json();

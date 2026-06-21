@@ -15,6 +15,7 @@ const ProfilePage = lazy(() => import('./pages/dashboard/ProfilePage'));
 const UnauthorizedPage = lazy(() => import('./pages/dashboard/UnauthorizedPage'));
 const Home = lazy(() => import('./pages/dashboard/Home'));
 const AboutSettings = lazy(() => import('./pages/dashboard/AboutSettings'));
+const ContactSettings = lazy(() => import('./pages/dashboard/ContactSettings'));
 
 const CreatePostPage = lazy(() => import('./pages/dashboard/CreatePostPage'));
 const PostsPage = lazy(() => import('./pages/dashboard/PostsPage'));
@@ -130,6 +131,14 @@ export default function App() {
 							element={
 								<ProtectedRoute allowedRoles={['admin', 'editor']}>
 									<AboutSettings />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="contact-settings"
+							element={
+								<ProtectedRoute allowedRoles={['admin', 'editor']}>
+									<ContactSettings />
 								</ProtectedRoute>
 							}
 						/>
