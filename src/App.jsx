@@ -14,6 +14,7 @@ const LoginPage = lazy(() => import('./pages/dashboard/LoginPage'));
 const ProfilePage = lazy(() => import('./pages/dashboard/ProfilePage'));
 const UnauthorizedPage = lazy(() => import('./pages/dashboard/UnauthorizedPage'));
 const Home = lazy(() => import('./pages/dashboard/Home'));
+const AboutSettings = lazy(() => import('./pages/dashboard/AboutSettings'));
 
 const CreatePostPage = lazy(() => import('./pages/dashboard/CreatePostPage'));
 const PostsPage = lazy(() => import('./pages/dashboard/PostsPage'));
@@ -116,7 +117,6 @@ export default function App() {
 								</ProtectedRoute>
 							}
 						/>
-
 						<Route
 							path="settings"
 							element={
@@ -125,7 +125,14 @@ export default function App() {
 								</ProtectedRoute>
 							}
 						/>
-
+                        <Route
+							path="about-settings"
+							element={
+								<ProtectedRoute allowedRoles={['admin', 'editor']}>
+									<AboutSettings />
+								</ProtectedRoute>
+							}
+						/>
 						<Route
 							path="profile"
 							element={
@@ -135,7 +142,6 @@ export default function App() {
 							}
 						/>
 					</Route>
-
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</Suspense>

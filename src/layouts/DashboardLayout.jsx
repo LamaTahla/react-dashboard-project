@@ -27,6 +27,11 @@ function DashboardLayout() {
                             Dashboard
                         </NavLink>
                     )}
+                    {isAdmin && (
+                        <NavLink to="/admin/about-settings" end>
+                            About Setting
+                        </NavLink>
+                    )}
 
                     {(isAdmin || isEditor) && (
                         <NavLink to="/admin/posts">
