@@ -1,3 +1,114 @@
+/* start dark or light */
+:root {
+  --bg-color: #f8fafc;
+  --surface-color: #ffffff;
+  --text-color: #111827;
+  --muted-text-color: #6b7280;
+  --border-color: #e5e7eb;
+
+  --primary-color: #2563eb;
+  --primary-hover-color: #1d4ed8;
+
+  --danger-color: #dc2626;
+  --success-color: #16a34a;
+
+  --input-bg-color: #ffffff;
+  --card-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+[data-theme="dark"] {
+  --bg-color: #0f172a;
+  --surface-color: #1e293b;
+  --text-color: #f8fafc;
+  --muted-text-color: #cbd5e1;
+  --border-color: #334155;
+
+  --primary-color: #60a5fa;
+  --primary-hover-color: #3b82f6;
+
+  --danger-color: #f87171;
+  --success-color: #4ade80;
+
+  --input-bg-color: #0f172a;
+  --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+html,
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease;
+}
+.theme-toggle:hover {
+  background-color: var(--bg-color);
+}
+.card,
+.dashboard-card,
+.post-card,
+.form-card,
+.stat-card {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+}
+
+input,
+textarea,
+select {
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted-text-color);
+}
+
+table {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+}
+
+th,
+td {
+  border-color: var(--border-color);
+}
+
+thead {
+  background-color: var(--bg-color);
+}
+
+p,
+small,
+.text-muted,
+.subtitle {
+  color: var(--muted-text-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+/* end dark or light */
+
+
+
 .app {
 	max-width: 600px;
 	margin: 40px auto;

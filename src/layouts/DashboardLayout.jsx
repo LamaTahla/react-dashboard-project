@@ -2,7 +2,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import '../styles/dashboard.css';
-
+import ThemeToggle from "../components/ThemeToggle";
 function DashboardLayout() {
     const navigate = useNavigate();
     const { currentUser, logout } = useAuth();
@@ -79,11 +79,13 @@ function DashboardLayout() {
                         <h1>React Dashboard</h1>
                         <p>Welcome back, {currentUser?.name || 'User'}</p>
                     </div>
-
                     <div className="topbar-user">
                         <span>{currentUser?.email}</span>
                         <span className="user-role">{currentUser?.role}</span>
+                        <ThemeToggle />
                     </div>
+                    
+
                 </header>
 
                 <main className="dashboard-content">

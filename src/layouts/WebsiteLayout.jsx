@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import ThemeToggle from "../components/ThemeToggle";
 
 function WebsiteLayout() {
   return (
@@ -26,6 +27,7 @@ function WebsiteLayout() {
           <NavLink to="/admin">
             Dashboard
           </NavLink>
+          <ThemeToggle />
         </nav>
       </header>
 
