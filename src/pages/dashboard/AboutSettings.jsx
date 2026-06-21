@@ -1,29 +1,30 @@
-import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { FaInfoCircle } from "react-icons/fa";
 
-import PageHeader from '../../components/PageHeader';
-import LoadingState from '../../components/LoadingState';
-import ErrorState from '../../components/ErrorState';
+import PageHeader from "../../components/PageHeader";
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
 
-import { getAboutPage, updateAboutPage } from '../../api/postsService';
-import { queryKeys } from '../../api/queryKeys';
+import { getAboutPage, updateAboutPage } from "../../api/postsService";
+import { queryKeys } from "../../api/queryKeys";
 
 function AboutSettings() {
   const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
-    badge: '',
-    title: '',
-    body: '',
-    card1Title: '',
-    card1Description: '',
-    card2Title: '',
-    card2Description: '',
-    card3Title: '',
-    card3Description: '',
-    card4Title: '',
-    card4Description: '',
+    badge: "",
+    title: "",
+    body: "",
+    card1Title: "",
+    card1Description: "",
+    card2Title: "",
+    card2Description: "",
+    card3Title: "",
+    card3Description: "",
+    card4Title: "",
+    card4Description: "",
   });
 
   const {
@@ -39,38 +40,38 @@ function AboutSettings() {
   useEffect(() => {
     if (about) {
       setFormData({
-        badge: about.badge || '',
-        title: about.title || '',
-        body: about.body || '',
-        card1Title: about.card1Title || '',
-        card1Description: about.card1Description || '',
-        card2Title: about.card2Title || '',
-        card2Description: about.card2Description || '',
-        card3Title: about.card3Title || '',
-        card3Description: about.card3Description || '',
-        card4Title: about.card4Title || '',
-        card4Description: about.card4Description || '',
+        badge: about.badge || "",
+        title: about.title || "",
+        body: about.body || "",
+        card1Title: about.card1Title || "",
+        card1Description: about.card1Description || "",
+        card2Title: about.card2Title || "",
+        card2Description: about.card2Description || "",
+        card3Title: about.card3Title || "",
+        card3Description: about.card3Description || "",
+        card4Title: about.card4Title || "",
+        card4Description: about.card4Description || "",
       });
     }
   }, [about]);
 
   const mutation = useMutation({
-   mutationFn: (updatedData) => {
-  if (!about?.id) {
-    throw new Error('About page id was not found');
-  }
+    mutationFn: (updatedData) => {
+      if (!about?.id) {
+        throw new Error("About page id was not found");
+      }
 
-  return updateAboutPage(about.id, {
-    ...about,
-    ...updatedData,
-  });
-},
+      return updateAboutPage(about.id, {
+        ...about,
+        ...updatedData,
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.aboutPage });
-      toast.success('About page updated successfully');
+      toast.success("About page updated successfully");
     },
     onError: () => {
-      toast.error('Failed to update about page');
+      toast.error("Failed to update about page");
     },
   });
 
@@ -85,7 +86,6 @@ function AboutSettings() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     mutation.mutate(formData);
   };
 
@@ -108,123 +108,145 @@ function AboutSettings() {
         subtitle="Update the content displayed on the public About page"
       />
 
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Badge</label>
-          <input
-            type="text"
-            name="badge"
-            value={formData.badge}
-            onChange={handleChange}
-          />
+      <div className="settings-card">
+        <div className="settings-card-header">
+          <div className="settings-icon">
+            <FaInfoCircle />
+          </div>
+
+          <div>
+            <h2>About Page Information</h2>
+            <p>Manage the content displayed on the public About page.</p>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-          />
+        <div className="settings-card-body">
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Badge</label>
+              <input
+                type="text"
+                name="badge"
+                value={formData.badge}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Title</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Description</label>
+              <textarea
+                name="body"
+                value={formData.body}
+                onChange={handleChange}
+                rows="5"
+              />
+            </div>
+
+            <div className="settings-section-title">
+              <h2>Cards</h2>
+              <p>Update the cards displayed in the About page.</p>
+            </div>
+
+            <div className="settings-form-grid">
+              <div className="form-group">
+                <label>Card 1 Title</label>
+                <input
+                  type="text"
+                  name="card1Title"
+                  value={formData.card1Title}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Card 1 Description</label>
+                <textarea
+                  name="card1Description"
+                  value={formData.card1Description}
+                  onChange={handleChange}
+                  rows="3"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Card 2 Title</label>
+                <input
+                  type="text"
+                  name="card2Title"
+                  value={formData.card2Title}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Card 2 Description</label>
+                <textarea
+                  name="card2Description"
+                  value={formData.card2Description}
+                  onChange={handleChange}
+                  rows="3"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Card 3 Title</label>
+                <input
+                  type="text"
+                  name="card3Title"
+                  value={formData.card3Title}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Card 3 Description</label>
+                <textarea
+                  name="card3Description"
+                  value={formData.card3Description}
+                  onChange={handleChange}
+                  rows="3"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Card 4 Title</label>
+                <input
+                  type="text"
+                  name="card4Title"
+                  value={formData.card4Title}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Card 4 Description</label>
+                <textarea
+                  name="card4Description"
+                  value={formData.card4Description}
+                  onChange={handleChange}
+                  rows="3"
+                />
+              </div>
+            </div>
+
+            <div className="settings-actions">
+              <button type="submit" disabled={mutation.isPending}>
+                {mutation.isPending ? "Updating..." : "Update About Page"}
+              </button>
+            </div>
+          </form>
         </div>
-
-        <div className="form-group">
-          <label>Description</label>
-          <textarea
-            name="body"
-            value={formData.body}
-            onChange={handleChange}
-            rows="5"
-          />
-        </div>
-
-        <h2>Cards</h2>
-
-        <div className="form-group">
-          <label>Card 1 Title</label>
-          <input
-            type="text"
-            name="card1Title"
-            value={formData.card1Title}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Card 1 Description</label>
-          <textarea
-            name="card1Description"
-            value={formData.card1Description}
-            onChange={handleChange}
-            rows="3"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Card 2 Title</label>
-          <input
-            type="text"
-            name="card2Title"
-            value={formData.card2Title}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Card 2 Description</label>
-          <textarea
-            name="card2Description"
-            value={formData.card2Description}
-            onChange={handleChange}
-            rows="3"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Card 3 Title</label>
-          <input
-            type="text"
-            name="card3Title"
-            value={formData.card3Title}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Card 3 Description</label>
-          <textarea
-            name="card3Description"
-            value={formData.card3Description}
-            onChange={handleChange}
-            rows="3"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Card 4 Title</label>
-          <input
-            type="text"
-            name="card4Title"
-            value={formData.card4Title}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Card 4 Description</label>
-          <textarea
-            name="card4Description"
-            value={formData.card4Description}
-            onChange={handleChange}
-            rows="3"
-          />
-        </div>
-
-        <button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? 'Updating...' : 'Update About Page'}
-        </button>
-      </form>
+      </div>
     </div>
   );
 }

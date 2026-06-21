@@ -1,27 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { FaEnvelope } from "react-icons/fa";
 
-import PageHeader from '../../components/PageHeader';
-import LoadingState from '../../components/LoadingState';
-import ErrorState from '../../components/ErrorState';
+import PageHeader from "../../components/PageHeader";
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
 
-import { getContactPage, updateContactPage } from '../../api/postsService';
-import { queryKeys } from '../../api/queryKeys';
+import { getContactPage, updateContactPage } from "../../api/postsService";
+import { queryKeys } from "../../api/queryKeys";
 
 function ContactSettings() {
   const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
-    badge: '',
-    title: '',
-    body: '',
-    email: '',
-    phone: '',
-    address: '',
-    facebook: '',
-    github: '',
-    linkedin: '',
+    badge: "",
+    title: "",
+    body: "",
+    email: "",
+    phone: "",
+    address: "",
+    facebook: "",
+    github: "",
+    linkedin: "",
   });
 
   const {
@@ -37,15 +38,15 @@ function ContactSettings() {
   useEffect(() => {
     if (contact) {
       setFormData({
-        badge: contact.badge || '',
-        title: contact.title || '',
-        body: contact.body || '',
-        email: contact.email || '',
-        phone: contact.phone || '',
-        address: contact.address || '',
-        facebook: contact.facebook || '',
-        github: contact.github || '',
-        linkedin: contact.linkedin || '',
+        badge: contact.badge || "",
+        title: contact.title || "",
+        body: contact.body || "",
+        email: contact.email || "",
+        phone: contact.phone || "",
+        address: contact.address || "",
+        facebook: contact.facebook || "",
+        github: contact.github || "",
+        linkedin: contact.linkedin || "",
       });
     }
   }, [contact]);
@@ -53,7 +54,7 @@ function ContactSettings() {
   const mutation = useMutation({
     mutationFn: (updatedData) => {
       if (!contact?.id) {
-        throw new Error('Contact page id was not found');
+        throw new Error("Contact page id was not found");
       }
 
       return updateContactPage(contact.id, {
@@ -63,10 +64,10 @@ function ContactSettings() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.contactPage });
-      toast.success('Contact page updated successfully');
+      toast.success("Contact page updated successfully");
     },
     onError: (error) => {
-      toast.error(error.message || 'Failed to update contact page');
+      toast.error(error.message || "Failed to update contact page");
     },
   });
 
@@ -81,7 +82,6 @@ function ContactSettings() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     mutation.mutate(formData);
   };
 
@@ -104,103 +104,132 @@ function ContactSettings() {
         subtitle="Update the content displayed on the public Contact page"
       />
 
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Badge</label>
-          <input
-            type="text"
-            name="badge"
-            value={formData.badge}
-            onChange={handleChange}
-          />
+      <div className="settings-card">
+        <div className="settings-card-header">
+          <div className="settings-icon">
+            <FaEnvelope />
+          </div>
+
+          <div>
+            <h2>Contact Page Information</h2>
+            <p>Manage contact content, contact details, and social links.</p>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-          />
+        <div className="settings-card-body">
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Badge</label>
+              <input
+                type="text"
+                name="badge"
+                value={formData.badge}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Title</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Description</label>
+              <textarea
+                name="body"
+                value={formData.body}
+                onChange={handleChange}
+                rows="4"
+              />
+            </div>
+
+            <div className="settings-section-title">
+              <h2>Contact Details</h2>
+              <p>Update the contact information displayed on the public page.</p>
+            </div>
+
+            <div className="settings-form-grid">
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Phone</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="settings-section-title">
+              <h2>Social Links</h2>
+              <p>Manage the social media links shown on the Contact page.</p>
+            </div>
+
+            <div className="settings-form-grid">
+              <div className="form-group">
+                <label>Facebook</label>
+                <input
+                  type="url"
+                  name="facebook"
+                  value={formData.facebook}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>GitHub</label>
+                <input
+                  type="url"
+                  name="github"
+                  value={formData.github}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>LinkedIn</label>
+                <input
+                  type="url"
+                  name="linkedin"
+                  value={formData.linkedin}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="settings-actions">
+              <button type="submit" disabled={mutation.isPending}>
+                {mutation.isPending ? "Updating..." : "Update Contact Page"}
+              </button>
+            </div>
+          </form>
         </div>
-
-        <div className="form-group">
-          <label>Description</label>
-          <textarea
-            name="body"
-            value={formData.body}
-            onChange={handleChange}
-            rows="4"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Phone</label>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Address</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-        </div>
-
-        <h2>Social Links</h2>
-
-        <div className="form-group">
-          <label>Facebook</label>
-          <input
-            type="url"
-            name="facebook"
-            value={formData.facebook}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>GitHub</label>
-          <input
-            type="url"
-            name="github"
-            value={formData.github}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>LinkedIn</label>
-          <input
-            type="url"
-            name="linkedin"
-            value={formData.linkedin}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? 'Updating...' : 'Update Contact Page'}
-        </button>
-      </form>
+      </div>
     </div>
   );
 }

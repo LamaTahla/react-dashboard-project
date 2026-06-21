@@ -1,25 +1,41 @@
-import { Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
+import { Link, useLocation } from "react-router-dom";
+import { FaArrowLeft, FaExclamationTriangle, FaHome } from "react-icons/fa";
 
 export default function NotFoundPage() {
-	return (
-		<div>
-			<PageHeader
-				title="Page Not Found"
-				description="The page you are looking for does not exist."
-			/>
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
-			<div className="card">
-				<p>
-					Sorry, we could not find the page you requested.
-				</p>
+  return (
+    <div className="not-found-page">
+      <div className="not-found-card">
+        <div className="not-found-icon">
+          <FaExclamationTriangle />
+        </div>
 
-				<Link to="/">
-					<button style={{ marginTop: '20px' }}>
-						Back to Dashboard
-					</button>
-				</Link>
-			</div>
-		</div>
-	);
+        <span className="not-found-code">404</span>
+
+        <h1>Page Not Found</h1>
+
+        <p>
+          The page you are looking for does not exist or may have been moved.
+        </p>
+
+        <div className="not-found-actions">
+          <Link to={isAdminRoute ? "/admin" : "/"} className="primary-btn">
+            <FaHome />
+            <span>{isAdminRoute ? "Back to Dashboard" : "Back to Home"}</span>
+          </Link>
+
+          <button
+            type="button"
+            className="secondary-btn"
+            onClick={() => window.history.back()}
+          >
+            <FaArrowLeft />
+            <span>Go Back</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
